@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+ext {
+    djl_version = "0.28.0"
+    slf4j_version = "2.0.13"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform("ai.djl:bom:${property("djl_version")}")
+    implementation 'ai.djl:api'
+
+    runtimeOnly 'ai.djl.pytorch:pytorch-model-zoo'
+    runtimeOnly 'ai.djl.mxnet:mxnet-model-zoo'
+
+    implementation "org.slf4j:slf4j-simple:${property("slf4j_version")}"
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
